@@ -1,0 +1,5 @@
+database/pb_data/
+.env
+database/models/
+database/models/
+__pycache__
