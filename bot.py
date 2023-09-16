@@ -1,6 +1,6 @@
 import os
-from utils import cleaned_message, get_message_id
-from event_handlers import handle_reaction, handle_on_message
+from src.utils import cleaned_message, get_message_id
+from src.event_handlers import handle_reaction, handle_on_message
 import discord
 from dotenv import load_dotenv
 
