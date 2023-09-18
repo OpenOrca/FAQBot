@@ -1,6 +1,6 @@
 import openai
-from config import OPENAI_API_BASE, OPENAI_API_KEY
-from utils import cleaned_message
+from src.config import OPENAI_API_BASE, OPENAI_API_KEY
+from src.utils import cleaned_message
 
 openai.api_base = OPENAI_API_BASE
 openai.api_key = OPENAI_API_KEY

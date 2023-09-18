@@ -1,7 +1,7 @@
-from utils import get_message_id, cleaned_message, get_answer_rating
-from database import (create_question, create_answer, vector_search,
+from src.utils import get_message_id, cleaned_message, get_answer_rating
+from src.database import (create_question, create_answer, vector_search,
                       update_answer_rating, pb)
-from llm import get_llm_message
+from src.llm import get_llm_message
 
 async def create_reply(message):
     clean_content = cleaned_message(message.content)
@@ -22,7 +22,7 @@ async def get_parent_message(message):
     return None
 
 
-async def handle_reaction(reaction, user, client):
+async def handle_reaction(type, reaction, user, client):
     if user == client.user:
         return
 
@@ -30,7 +30,7 @@ async def handle_reaction(reaction, user, client):
     if str(reaction.emoji) == "👍" or str(reaction.emoji) == "👎":
         try:
             answer_row = pb.collection('answers').get_first_list_item(f"text = '{cleaned_text}'")
-            rating = get_answer_rating(reaction, "add")
+            rating = get_answer_rating(reaction, type)
             update_answer_rating(answer_row.id, rating)
         except:
             print('Row not found')

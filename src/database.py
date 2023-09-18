@@ -1,6 +1,6 @@
 from pocketbase import PocketBase
-from utils import cleaned_message
-from config import POCKETBASE_URL
+from src.utils import cleaned_message
+from src.config import POCKETBASE_URL
 
 pb = PocketBase(POCKETBASE_URL)
 
