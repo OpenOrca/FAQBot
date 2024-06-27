@@ -2,6 +2,7 @@ import os
 from src.utils import cleaned_message, get_message_id
 from src.event_handlers import handle_reaction, handle_on_message
 import discord
+from src.database import pb
 from dotenv import load_dotenv
 
 load_dotenv()

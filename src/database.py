@@ -9,11 +9,11 @@ def create_related_question(text, id, guild_id, channel_id, message_id, author_i
     pb.collection('questions').create({
         'text': cleaned_text,
         'id': id,
-        'guild_id': guild_id,
-        'channel_id': channel_id,
-        'message_id': message_id,
-        'author_id': author_id,
-        "parent_question_id": parent_question_id
+        'guild_id': str(guild_id),
+        'channel_id': str(channel_id),
+        'message_id': str(message_id),
+        'author_id': str(author_id),
+        "parent_question_id": str(parent_question_id)
     })
 
 def create_question(message, id, parent_question_id=""):
@@ -21,11 +21,11 @@ def create_question(message, id, parent_question_id=""):
     pb.collection('questions').create({
         'text': cleaned_text,
         'id': id,
-        'guild_id': message.guild.id,
-        'channel_id': message.channel.id,
-        'message_id': message.id,
-        'author_id': message.author.id,
-        "parent_question_id": parent_question_id
+        'guild_id': str(message.guild.id),
+        'channel_id': str(message.channel.id),
+        'message_id': str(message.id),
+        'author_id': str(message.author.id),
+        "parent_question_id": str(parent_question_id)
     })
 
 def create_answer(message, id, question_id, source, parent_answer_id = ""):
@@ -37,11 +37,11 @@ def create_answer(message, id, question_id, source, parent_answer_id = ""):
         'id': id,
         "parent_answer_id": parent_answer_id,
         'source': source,
-        'question': question_id,
-        'guild_id': message.guild.id,
-        'channel_id': message.channel.id,
-        'message_id': message.id,
-        'author_id': message.author.id
+        'question': str(question_id),
+        'guild_id': str(message.guild.id),
+        'channel_id': str(message.channel.id),
+        'message_id': str(message.id),
+        'author_id': str(message.author.id)
     })
 
 def update_answer_rating(id, rating):
@@ -49,11 +49,11 @@ def update_answer_rating(id, rating):
         "rating+": rating
     })
 
-def vector_search(question):
-    cleaned_question = cleaned_message(question)
+def vector_search(message):
+    cleaned_question = cleaned_message(message.content)
     results = pb.collection("questions").get_list(per_page=10000000, query_params={
         "search": cleaned_question,
-        "filter": 'parent_question_id = ""',
+        "filter": f'parent_question_id = "" && guild_id = "{str(message.guild.id)}"',
         "expand": "answers(question)"
     })
     if not results.items:
